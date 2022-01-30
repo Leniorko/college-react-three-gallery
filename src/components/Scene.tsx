@@ -5,6 +5,7 @@ import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Box from "./Box";
+import modelURL from "../threejsmodels/kindoflamp.gltf"
 
 
 type GLTFResult = GLTF & {
@@ -20,7 +21,7 @@ export default function Scene() {
       <Suspense fallback={null}>
         {/* <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} /> */}
-        {/* <MyModel /> */}
+        <MyModel position={[0, -2, 0]} />
         <OrbitControls />
         <Environment preset="sunset" background />
       </Suspense>
@@ -28,18 +29,15 @@ export default function Scene() {
   );
 }
 
-// TODO: Find out hot to load GLB file
-// Probably need to load static files for parcel and serve them. There is plugin but i installed it for different version
-
-// function MyModel(props: JSX.IntrinsicElements['group']) {
-//   const group = useRef<THREE.Group>()
-//   const { nodes, materials } = useGLTF('./kindoflamp.glb') as unknown as GLTFResult
-//   return (
-//     <group ref={group} {...props} dispose={null}>
-//       <mesh geometry={nodes.Cube.geometry} material={nodes.Cube.material} />
-//     </group>
-//   )
-// }
+function MyModel(props: JSX.IntrinsicElements['group']) {
+  const group = useRef<THREE.Group>()
+  const { nodes, materials } = useGLTF(modelURL) as unknown as GLTFResult
+  return (
+    <group ref={group} {...props} dispose={null}>
+      <mesh geometry={nodes.Cube.geometry} material={nodes.Cube.material} />
+    </group>
+  )
+}
 
 
-// useGLTF.preload('./kindoflamp.glb')
+useGLTF.preload(modelURL)
