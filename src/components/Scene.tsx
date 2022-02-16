@@ -26,7 +26,7 @@ export default function Scene() {
         <axesHelper ref={axesHelper} args={[100]} />
         {/* XZY */}
         <OrbitControls target={[20, 0,-10]} makeDefault  />
-        <Environment preset="sunset" background />
+        {/* <Environment preset="sunset" background /> */}
       </Suspense>
     </Canvas>
   );
