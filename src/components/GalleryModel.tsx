@@ -1,79 +1,93 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import GalleryModelGltf from "../threejsmodels/GalleryThreejsProject.gltf"
+import GalleryModelGltf from "../threejsmodels/GalleryThreejsProject.gltf";
 import { GLTFResult } from "../types/common.types";
-import { Matrix4, Mesh, Vector3 } from "three";
+import { Euler, Matrix4, Mesh, Vector3 } from "three";
+import PainingPlane from "./PaintingPlane";
 
-export default function GalleryModel(props: JSX.IntrinsicElements['group']) {
+export default function GalleryModel(props: JSX.IntrinsicElements["group"]) {
   const group = useRef();
-  const { nodes, materials } = useGLTF(GalleryModelGltf) as unknown as GLTFResult;
+  const { nodes, materials } = useGLTF(
+    GalleryModelGltf
+  ) as unknown as GLTFResult;
   const referenceMesh = useRef<Mesh>(null);
-  let myVec3 = new Vector3();
-  nodes.PaintingReferencePlace.geometry.computeBoundingBox();
-  const referenceGeometry = nodes.PaintingReferencePlace.geometry.boundingBox;
+  const [referenceSpawnPoint, setReferenceSpawnPoint] = useState(new Vector3());
+  useEffect(() => {
+    nodes.PaintingReferencePlace.geometry.computeBoundingBox();
+    let newSpwnPoint = new Vector3();
+    const referenceGeometry = nodes.PaintingReferencePlace.geometry.boundingBox;
 
-  myVec3.subVectors(referenceGeometry!!.max, referenceGeometry!!.min);
-  myVec3.multiplyScalar(0.5);
-  myVec3.add(referenceGeometry!!.min);
-  myVec3.applyMatrix4(new Matrix4());
-  console.log(myVec3);
-  
-  
+    newSpwnPoint.subVectors(referenceGeometry!!.max, referenceGeometry!!.min);
+    newSpwnPoint.multiplyScalar(0.5);
+    newSpwnPoint.add(referenceGeometry!!.min);
+    newSpwnPoint.applyMatrix4(new Matrix4());
+    console.log(newSpwnPoint);
+    setReferenceSpawnPoint(newSpwnPoint);
+  }, [nodes.PaintingReferencePlace]);
+
   return (
-    <group ref={group} {...props} dispose={null}>
-      <mesh
-        castShadow
-        receiveShadow
-        ref={referenceMesh}
-        geometry={nodes.PaintingReferencePlace.geometry}
-        material={nodes.PaintingReferencePlace.material}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Room.geometry}
-        material={nodes.Room.material}
-      >
+    <>
+      <group ref={group} {...props} dispose={null}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Baseboard.geometry}
-          material={nodes.Baseboard.material}
+          ref={referenceMesh}
+          geometry={nodes.PaintingReferencePlace.geometry}
+          material={nodes.PaintingReferencePlace.material}
         />
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Ceiling.geometry}
-          material={nodes.Ceiling.material}
+          geometry={nodes.Room.geometry}
+          material={nodes.Room.material}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Baseboard.geometry}
+            material={nodes.Baseboard.material}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Ceiling.geometry}
+            material={nodes.Ceiling.material}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Floor.geometry}
+            material={nodes.Floor.material}
+          />
+        </mesh>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.RoomPaintingBoard.geometry}
+          material={nodes.RoomPaintingBoard.material}
         />
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Floor.geometry}
-          material={nodes.Floor.material}
+          geometry={nodes.RoomPaintingBoard001.geometry}
+          material={nodes.RoomPaintingBoard001.material}
         />
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.RoomPaintingBoard.geometry}
-        material={nodes.RoomPaintingBoard.material}
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.RoomPaintingBoard002.geometry}
+          material={nodes.RoomPaintingBoard002.material}
+          position={[10, 1, -10]}
+          rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+        />
+      </group>
+      <PainingPlane
+        spawnPoint={referenceSpawnPoint}
+        rotation={new Euler(0, Math.PI / 2, 0)}
+        planeAttrs={{
+          args: [3, 3],
+        }}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.RoomPaintingBoard001.geometry}
-        material={nodes.RoomPaintingBoard001.material}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.RoomPaintingBoard002.geometry}
-        material={nodes.RoomPaintingBoard002.material}
-        position={[10, 1, -10]}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-      />
-    </group>
+    </>
   );
 }
 
