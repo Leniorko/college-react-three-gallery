@@ -5,6 +5,9 @@ import { Environment } from "@react-three/drei";
 import GalleryModel from "./GalleryModel";
 import CustomControls from "./CameraControlsConfig";
 
+/**
+ * Main scene
+ */
 export default function Scene() {
   const axesHelper = useRef<THREE.AxesHelper>(null);
 
@@ -25,7 +28,7 @@ export default function Scene() {
         <gridHelper args={[100, 100]} />
         <CustomControls />
         <axesHelper ref={axesHelper} args={[100]} />
-        <Environment preset="sunset" background />
+        <Environment preset="studio"/>
       </Suspense>
     </Canvas>
   );

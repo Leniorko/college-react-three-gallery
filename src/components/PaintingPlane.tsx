@@ -1,15 +1,20 @@
+import { Image } from '@react-three/drei';
 import { PlaneBufferGeometryProps } from '@react-three/fiber';
 import THREE, { Vector3 } from 'three';
+import testImg from '../images/horizontal_test.jpg'
+
 
 type TPaintingPaintProps = {
-  spawnPoint: Vector3;
-  planeAttrs: PlaneBufferGeometryProps;
+  // spawnPoint: Vector3;
+  // planeAttrs?: PlaneBufferGeometryProps;
 } & JSX.IntrinsicElements['mesh'];
 
-export default function PainingPlane(props: TPaintingPaintProps){
+/**
+ * Plain for image render. Places at spawnPoint.
+ */
+export default function PaintingPlane(props: TPaintingPaintProps){
+
   return(
-    <mesh position={props.spawnPoint} rotation={props.rotation}>
-      <planeBufferGeometry args={props.planeAttrs.args} />
-    </mesh>
+    <Image position={props.position} scale={2} rotation={props.rotation} url={testImg} />
   )
 }
