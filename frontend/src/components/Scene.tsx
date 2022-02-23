@@ -25,9 +25,9 @@ export default function Scene() {
     <Canvas id="scene" style={{ height: "100vh" }}>
       <Suspense fallback={null}>
         <GalleryModel />
-        <gridHelper args={[100, 100]} />
+        {/* <gridHelper args={[100, 100]} /> */}
         <CustomControls />
-        <axesHelper ref={axesHelper} args={[100]} />
+        {/* <axesHelper ref={axesHelper} args={[100]} /> */}
         <Environment preset="studio"/>
       </Suspense>
     </Canvas>
