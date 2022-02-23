@@ -7,6 +7,7 @@ specifiers:
   '@types/react-dom': ^17.0.11
   '@types/three': ^0.137.0
   '@vitejs/plugin-react': ^1.2.0
+  axios: ^0.26.0
   react: ^17.0.2
   react-dom: ^17.0.2
   three: ^0.137.5
@@ -16,6 +17,7 @@ specifiers:
 dependencies:
   '@react-three/drei': 8.10.6_5d224b524eca84eb143c70e27fe0b88b
   '@react-three/fiber': 7.0.26_34b80ea473220ee91a0c6918b7b53ec9
+  axios: 0.26.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   three: 0.137.5
@@ -517,6 +519,14 @@ packages:
       color-convert: 1.9.3
     dev: true
 
+  /axios/0.26.0:
+    resolution: {integrity: sha512-lKoGLMYtHvFrPVt3r+RBMp9nh34N0M8zEfCWqdWZx6phynIEhQqAdydpyBAAG211zlhX9Rgu08cOamy6XjE5Og==}
+    dependencies:
+      follow-redirects: 1.14.9
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /bidi-js/1.0.2:
     resolution: {integrity: sha512-rzSy/k7WdX5zOyeHHCOixGXbCHkyogkxPKL2r8QtzHmVQDiWCXUWa18bLdMWT9CYMLOYTjWpTHawuev2ouYJVw==}
     dependencies:
@@ -824,6 +834,16 @@ packages:
 
   /fflate/0.6.10:
     resolution: {integrity: sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==}
+    dev: false
+
+  /follow-redirects/1.14.9:
+    resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /fsevents/2.3.2:

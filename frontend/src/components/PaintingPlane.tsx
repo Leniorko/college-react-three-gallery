@@ -7,6 +7,7 @@ import testImg from '../images/horizontal_test.jpg'
 type TPaintingPaintProps = {
   // spawnPoint: Vector3;
   // planeAttrs?: PlaneBufferGeometryProps;
+  imgUrl: string;
 } & JSX.IntrinsicElements['mesh'];
 
 /**
@@ -15,6 +16,6 @@ type TPaintingPaintProps = {
 export default function PaintingPlane(props: TPaintingPaintProps){
 
   return(
-    <Image position={props.position} scale={2} rotation={props.rotation} url={testImg} />
+    <Image position={props.position} scale={2} rotation={props.rotation} url={props.imgUrl} />
   )
 }

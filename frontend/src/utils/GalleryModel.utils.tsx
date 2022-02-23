@@ -1,5 +1,6 @@
 import { BufferGeometry, Material, Matrix4, Mesh, Vector3 } from "three";
 import PaintingPlane from "../components/PaintingPlane";
+import { getImgData } from "../service/server.api";
 import { ReferencePointNameTemplate, rotationConstants } from "../types/common.types";
 
 export function calculateSpawnPoint(node: THREE.Mesh ){
@@ -15,26 +16,30 @@ export function calculateSpawnPoint(node: THREE.Mesh ){
   return spawnPointToReturn;
 }
 
-export function generatePaintingPlanes(nodes: {[key: string]: THREE.Mesh}){
+export async function generatePaintingPlanes(nodes: {[key: string]: THREE.Mesh}){
   const paintingsArray = [];
   let counter = 0;
 
+  const imgData = (await getImgData()).hits
+  console.log(imgData);
+  
+
   for (const [nodeName, node] of Object.entries(nodes)){
     if(nodeName.includes(ReferencePointNameTemplate.toRight)){
-      const newPainting = <PaintingPlane key={`to-right-${counter++}`} position={calculateSpawnPoint(node)} rotation={rotationConstants.toRight} />
+      const newPainting = <PaintingPlane key={`to-right-${counter++}`} imgUrl={imgData[counter].webformatURL} position={calculateSpawnPoint(node)} rotation={rotationConstants.toRight} />
       paintingsArray.push(newPainting)
       continue;
     }
     if(nodeName.includes(ReferencePointNameTemplate.toLeft)){
-      const newPainting = <PaintingPlane key={`to-left-${counter++}`} position={calculateSpawnPoint(node)} rotation={rotationConstants.toLeft} />
+      const newPainting = <PaintingPlane key={`to-left-${counter++}`} imgUrl={imgData[counter].webformatURL} position={calculateSpawnPoint(node)} rotation={rotationConstants.toLeft} />
       paintingsArray.push(newPainting)
       continue;
     }if(nodeName.includes(ReferencePointNameTemplate.toCamera)){
-      const newPainting = <PaintingPlane key={`to-camera-${counter++}`} position={calculateSpawnPoint(node)} rotation={rotationConstants.toCamera} />
+      const newPainting = <PaintingPlane key={`to-camera-${counter++}`} imgUrl={imgData[counter].webformatURL} position={calculateSpawnPoint(node)} rotation={rotationConstants.toCamera} />
       paintingsArray.push(newPainting)
       continue;
     }if(nodeName.includes(ReferencePointNameTemplate.fromCamera)){
-      const newPainting = <PaintingPlane key={`from-camera-${counter++}`} position={calculateSpawnPoint(node)} rotation={rotationConstants.fromCamera} />
+      const newPainting = <PaintingPlane key={`from-camera-${counter++}`} imgUrl={imgData[counter].webformatURL} position={calculateSpawnPoint(node)} rotation={rotationConstants.fromCamera} />
       paintingsArray.push(newPainting)
       continue;
     }

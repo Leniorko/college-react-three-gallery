@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import GalleryModelGltf from "../threejsmodels/GalleryThreejsProject.gltf";
 import { GLTFResult } from "../types/common.types";
@@ -25,8 +25,18 @@ export default function GalleryModel(props: JSX.IntrinsicElements["group"]) {
   //   console.log(newSpwnPoint);
   //   setReferenceSpawnPoint(newSpwnPoint);
   // }, [nodes.PaintingReferencePlaceF000]);
+  let paintings: JSX.Element[] = [];
+  const [statePaintings, setStatePaintings] = useState<JSX.Element[]>();
 
-  const paintings = generatePaintingPlanes(nodes);
+  useEffect(()=>{
+    async function test() {
+      paintings = await generatePaintingPlanes(nodes);
+      console.log(paintings);
+      setStatePaintings(paintings);
+    }
+    test();
+  },[])
+
   
   return (
     <>
@@ -146,7 +156,7 @@ export default function GalleryModel(props: JSX.IntrinsicElements["group"]) {
           material={nodes.RoomPaintingBoard002.material}
         />
       </group>
-      {paintings}
+      {statePaintings}
       {/* <PaintingPlane
         position={referenceSpawnPoint}
         rotation={new Euler(0, Math.PI / 2, 0)}
