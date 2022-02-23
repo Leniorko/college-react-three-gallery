@@ -12,7 +12,7 @@ import { Vector3 } from "three";
 export default function CustomControls() {
   const controls = useRef<any>(null);
   const [isLocked, setIsLocked] = useState(false);
-  const [isFirstConfig, setIsFirtsConfig] = useState(true);
+  const [isFirstConfig, setIsFirstConfig] = useState(true);
 
   const { camera } = useThree();
 
@@ -42,8 +42,6 @@ export default function CustomControls() {
     if (controls.current && isLocked) {
       document.addEventListener("keydown", onKeyDown, false);
     } else {
-      console.log("Перед снятием");
-      
       document.removeEventListener("keydown", onKeyDown, false);
     }
 
@@ -55,7 +53,7 @@ export default function CustomControls() {
         setIsLocked(false);
       });
 
-      setIsFirtsConfig(false);
+      setIsFirstConfig(false);
     }
   }, [controls.current, isLocked]);
 
