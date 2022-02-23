@@ -1,14 +1,13 @@
 import { PointerLockControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 
 /**
  * Component to define custom camera ant controls
  */
-// FIXME: Not removing event listener on unlock (code deleted and not worked before)
-// FIXME: During development on hot reload adds new event listeners. Shouldn't be a problem on prod.
 // FIXME: Jittering movement. Should be smooth. Probably onKeyDown should add velocity and stop it onKeyUp
+// TODO: Collision detection
 export default function CustomControls() {
   const controls = useRef<any>(null);
   const [isLocked, setIsLocked] = useState(false);
@@ -21,7 +20,7 @@ export default function CustomControls() {
     camera.lookAt(1, 1.8, -2);
   }, []);
 
-  const onKeyDown = function (event: KeyboardEvent) {
+  const onKeyDown = useCallback(function (event: KeyboardEvent) {
     switch (event.code) {
       case "KeyW":
         controls.current.moveForward(0.11);
@@ -36,13 +35,13 @@ export default function CustomControls() {
         controls.current.moveRight(0.11);
         break;
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (controls.current && isLocked) {
-      document.addEventListener("keydown", onKeyDown, false);
+      document.addEventListener("keydown", onKeyDown);
     } else {
-      document.removeEventListener("keydown", onKeyDown, false);
+      document.removeEventListener("keydown", onKeyDown);
     }
 
     if (controls.current && isFirstConfig) {
